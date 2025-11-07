@@ -1,0 +1,119 @@
+# mir2
+import pandas as pd
+import seaborn as data
+import matplotlib.pyplot as plt
+df = data.load_dataset("tips")
+print("First 5 rows:")
+print(df.head())
+print(df.describe())
+print("\nMissing values:")
+print(df.isnull().sum())
+df.drop_duplicates(inplace=True)
+print("\nCount of records per day:")
+print(df['day'].value_counts())
+EX NO : 1
+DATE :
+DATA PREPROCESSING AND EXPLORATION
+data.boxplot(x='time', y='total_bill', data=df)
+plt.title("Total Bill by Time of Day")
+plt.show()
+
+
+import seaborn as data
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+df = data.load_dataset("tips")[['total_bill', 'tip', 'size']]
+model = StandardScaler()
+result = model.fit_transform(df)
+kmeans = KMeans(n_clusters=3)
+df['Cluster'] = kmeans.fit_predict(result)
+pca = PCA(n_components=2)
+pca_data= pca.fit_transform(result)
+EX NO : 2
+DATE :
+Conducting Cluster Analysis using K-Means Clustering
+plt.scatter(pca_data[:, 0], pca_data[:, 1], c=df['Cluster'], cmap='Set1')
+plt.title("K-Means Clustering (Tips Data)")
+plt.xlabel("PCA 1")
+plt.ylabel("PCA 2")
+plt.grid(True)
+plt.show()
+
+
+from sklearn.tree import DecisionTreeClassifier
+import pandas as pd
+data = {
+'Marks': [90, 70, 50, 30, 85, 40, 60, 25],
+'Attendance': [90, 80, 60, 30, 95, 50, 75, 20],
+'Result': ['Pass', 'Pass', 'Pass', 'Fail', 'Pass', 'Fail', 'Pass', 'Fail']
+}
+df = pd.DataFrame(data)
+X = df[['Marks', 'Attendance']]
+y = df['Result']
+model = DecisionTreeClassifier()
+model.fit(X, y)
+mark = int(input("Enter the student's mark: "))
+attendance = int(input("Enter the student's attendance: "))
+user_input = [[mark, attendance]]
+EX NO : 3
+DATE :
+Configuring Decision Tree
+prediction = model.predict(user_input)
+print("Prediction:", prediction[0])
+
+
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+data = {
+'Hours': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+'Marks': [10, 20, 30, 40, 50, 55, 65, 80, 85, 95]
+}
+df = pd.DataFrame(data)
+X = df[['Hours']]
+y = df['Marks']
+model = LinearRegression()
+model.fit(X, y)
+hour = float(input("Enter hours studied: "))
+predicted_marks = model.predict([[hour]])
+print(f"Predicted Marks: {predicted_marks[0]:.2f}")
+plt.scatter(X, y, color='blue', label='Actual Data')
+EX NO : 4
+DATE :
+Performing Regression Analysis using Linear Regression
+plt.plot(X, model.predict(X), color='red', label='Regression Line')
+plt.xlabel('Hours Studied')
+plt.ylabel('Marks')
+plt.title('Linear Regression - Marks vs Hours Studied')
+plt.legend()
+plt.grid(True)
+plt.show(
+
+
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.model_selection import train_test_split
+X = [[1], [2], [3], [4], [5], [6], [7], [8]]
+y = [0, 0, 0, 0, 1, 1, 1, 1]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+model = LogisticRegression()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred)
+EX NO : 7
+DATE :
+Model evaluation using accuracy, precision, recall and F1 score
+recall = recall_score(y_test, y_pred)
+f1 = f1_score(y_test, y_pred)
+print("Accuracy:", accuracy)
+print("Precision:", precision)
+print("Recall:", recall)
+print("F1 Score:", f1)
+
+
+
+
